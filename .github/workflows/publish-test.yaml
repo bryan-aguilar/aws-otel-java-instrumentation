@@ -50,12 +50,6 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN_RELEASE }}
           aws-region: ${{ env.AWS_PRIVATE_ECR_REGION }}
 
-      - name: Log in to AWS ECR
-        uses: docker/login-action@v3
-        with:
-          registry: public.ecr.aws
-        env:
-          AWS_REGION: ${{ env.AWS_PUBLIC_ECR_REGION }}
 
       - name: Log in to AWS private ECR
         uses: docker/login-action@v3
@@ -92,5 +86,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ env.PUBLIC_REPOSITORY }}:v${{ github.event.inputs.version }}
             ${{ env.PRIVATE_REPOSITORY }}:v${{ github.event.inputs.version }}
